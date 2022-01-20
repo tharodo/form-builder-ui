@@ -1,0 +1,10 @@
+.ant-page-header{
+    padding: 10px 0;
+}
+.menu{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.ant-divider-horizontal{
+    margin: 0;
+}
