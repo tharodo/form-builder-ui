@@ -5,7 +5,7 @@ import './FormTable.css'
 import './FormTemplates.css'
 const FormTemplates = ()  => {
     return(
-        <div>
+        <div className='form-wrapper'>
             <Header/>
             <div className='form-templates'>
                 <div className='form-title'>

@@ -6,7 +6,7 @@ const CreateNewForm = () => {
     return (
         <div>
             <Button type="primary">
-                <Link to={`/form/create`}>
+                <Link to={`/forms/create`}>
                     Create New Form    
                 </Link>
             </Button>
