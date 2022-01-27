@@ -1,5 +1,6 @@
 import { Table, Tag } from 'antd';
-import { ReactChild, ReactFragment, ReactPortal } from 'react';
+import axios from 'axios';
+import { ReactChild, ReactFragment, ReactPortal, useEffect, useState } from 'react';
 
 const columns = [
     {
@@ -12,83 +13,44 @@ const columns = [
         title: 'STATUS',
         key: 'status',
         dataIndex: 'status',
-        render: (status: any[]) => (
-            <>
-                {status.map(stt => {
-                    let color;
-                    if (stt === 'Active' || 'In use') {
-                        color = 'green';
-                    }
-                    if (stt === 'Archived') {
-                        color = 'grey'
-                    }
-                    return (
-                        <Tag color={color} key={stt}>
-                            {stt}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
     },
     {
-        title: 'VERSION NO',
-        dataIndex: 'version',
-        key: 'version',
+        title: 'DESCRIPTION',
+        dataIndex: 'description',
+        key: 'description',
     },
     {
         title: 'LAST UPDATED',
-        dataIndex: 'updated',
+        dataIndex: 'updatedAt',
         key: 'updated',
     },
 
 ];
 
-const data = [
-    {
-        key: '1',
-        name: 'Incident Details',
-        status: ['Active'],
-        version: '1'
-
-    },
-    {
-        key: '2',
-        name: 'Interview Transcript',
-        status: ['Archived'],
-        version: '3'
-
-    },
-    {
-        key: '3',
-        name: 'Location Information',
-        status: ['In use'],
-        version: '1'
-    },
-    {
-        key: '1',
-        name: 'Incident Details',
-        status: ['Active'],
-        version: '1'
-
-    },
-    {
-        key: '2',
-        name: 'Interview Transcript',
-        status: ['Archived'],
-        version: '3'
-
-    },
-    {
-        key: '3',
-        name: 'Location Information',
-        status: ['In use'],
-        version: '1'
-    },
-];
-
-
 const FormTable = () => {
+    const [data, setData] = useState<any[]>([]);
+    useEffect(() => {
+        axios
+            .post("http://localhost:8000/api/forms/list", {
+                search: "",
+                status: ["Active"],
+                page: 1,
+                pageSize: 10,
+            })
+            .then(function (response: any) {
+                console.log(response.data);
+                setData(response.data.forms);
+            })
+            .catch(function (error: any) {
+                console.log(error);
+            });
+
+    }, []);
+
+    useEffect(() => {
+        console.log("data;", data);
+    }, [data]);
+
     return (
         <div>
             <Table columns={columns} dataSource={data} />
